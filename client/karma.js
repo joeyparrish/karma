@@ -61,7 +61,7 @@ function Karma (updater, socket, iframe, opener, navigator, location, document) 
   if (window.addEventListener) {
     window.addEventListener('message', function handleMessage (evt) {
       // Resolve the origin of our message
-      var origin = evt.origin || evt.originalEvent.origin
+      var origin = evt.origin || (evt.originalEvent && evt.originalEvent.origin)
 
       // If the message isn't from our host, then reject it
       if (origin !== window.location.origin) {
