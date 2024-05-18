@@ -237,6 +237,11 @@ function Karma (updater, socket, iframe, opener, navigator, location, document) 
 
     socket.emit('complete', result || {})
     if (this.config.clearContext) {
+      // The onbeforeunload listener was added by the context to catch
+      // unexpected navigations while running tests.  Tests are complete, so
+      // remove this from the top window.  Fixes "full page reload" errors on
+      // flat test environments (useIframe: false, runInParent: true).
+      window.onbeforeunload = undefined
       navigateContextTo('about:blank')
     } else {
       self.updater.updateTestStatus('complete')
