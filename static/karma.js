@@ -125,8 +125,8 @@ function Karma (updater, socket, iframe, opener, navigator, location, document) 
             if (ele.tagName && ele.tagName.toLowerCase() === 'script') {
               var tmp = ele
               ele = document.createElement('script')
-              ele.src = policy.createScriptURL(tmp.src)
-              ele.crossOrigin = tmp.crossOrigin
+              ele.src = policy.createScriptURL(tmp.getAttribute('src'))
+              ele.crossOrigin = tmp.getAttribute('crossOrigin')
             }
             ele.onload = function () {
               loadScript(idx + 1)
