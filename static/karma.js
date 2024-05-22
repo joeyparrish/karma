@@ -361,6 +361,17 @@ var socket = io(location.host, {
   useNativeTimers: true
 })
 
+// Log unhandled errors directly to the console.  This can help debug
+// load-time errors in Karma itself.
+window.addEventListener('error', function(event) {
+  var error = event.error || {}
+
+  var log = 'Karma caught unhandled error: ' + error.message
+  log += '\nstack:\n' + error.stack
+
+  socket.emit('info', { type: 'dump', log: log })
+});
+
 // instantiate the updater of the view
 var updater = new StatusUpdater(socket, util.elm('title'), util.elm('banner'), util.elm('browsers'))
 window.karma = new Karma(updater, socket, util.elm('context'), window.open,
